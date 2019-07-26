@@ -85,7 +85,7 @@ namespace Native.Csharp.App.Event
                     "教丛雨说话:.录入话语 问: 答: \n" +
                     "让丛雨录跑团记录:.录入开始 /名称 录入结束\n" +
                     "投点使用/r 也可开启传统投点模式";
-                发送消息(说明);
+                发送消息(说明 );
             }
             if (Message.StartsWith(".jrrp"))
             {
@@ -143,6 +143,11 @@ namespace Native.Csharp.App.Event
 
 
             #endregion
+            #region
+              if(Message.StartsWith("/开启"))
+
+            #endregion
+
             CLR();
         }
         void CLR()
@@ -177,11 +182,11 @@ namespace Native.Csharp.App.Event
 
 
 
-       public  string Dice(string Message)//不提供处理/r符号/复用性yes
+       public  string Dice(string Message)//不提供处理/r符号/
         {
             string ReturnMessage = "";
             int I = 0;
-            MatchCollection numList = Regex.Matches(Message, @"[+-]?([0-9]+d[0-9]+)");
+            MatchCollection numList = Regex.Matches(Message, @"[+-]?([0-9]+d[0-9]+)|([+-]?[0-9]+)");
             if (numList.Count > 1000)
             {
                 return "你投的太多了！";
@@ -197,22 +202,34 @@ namespace Native.Csharp.App.Event
         {
             string ReturnMessage = "";
             MatchCollection numList = Regex.Matches(SingleMessage, @"[+-]?[0-9]+");
-            int Time = int.Parse(numList[0].Value);
-            int Size = int.Parse(numList[1].Value);
-            if (Time < 0)//不优雅的处理方式
+            if (numList.Count == 1)
             {
-                Time = -Time;
-                Size = -Size;
+                var T = numList[0].Value;
+                if (numList[0].Value[0]=='+')
+                {
+                    T =   numList[0].Value.Substring(1);
+                }
+                intValue += int.Parse(T);
+                ReturnMessage += "(" + T+ ")";
+                return ReturnMessage;
+
             }
-            var ts = System.DateTime.Now.Subtract(DateTime.Parse("1970-1-1"));
-            int diffMilliseconds = Convert.ToInt32(ts.TotalSeconds + intValue);
-            System.Random random = new Random(diffMilliseconds);//获取真-随机数（个屁）
-            for (int a = 0; a < Time; a++)
-            {
-                int Temp = Size >= 0 ? random.Next(0+1, Size+1) : random.Next(Size, 0);
-                intValue += Temp;
-                ReturnMessage += Temp > 0 && a + 1 < Time ? Temp.ToString() + "+" : Temp.ToString();
-            }
+                int Time = int.Parse(numList[0].Value);
+                int Size = int.Parse(numList[1].Value);
+                if (Time < 0)//不优雅的处理方式
+                {
+                    Time = -Time;
+                    Size = -Size;
+                }
+                var ts = System.DateTime.Now.Subtract(DateTime.Parse("1970-1-1"));
+                int diffMilliseconds = Convert.ToInt32(ts.TotalSeconds + intValue);
+                System.Random random = new Random(diffMilliseconds);//获取真-随机数（个屁）
+                for (int a = 0; a < Time; a++)
+                {
+                    int Temp = Size >= 0 ? random.Next(0 + 1, Size + 1) : random.Next(Size, 0);
+                    intValue += Temp;
+                    ReturnMessage += Temp > 0 && a + 1 < Time ? Temp.ToString() + "+" : Temp.ToString();
+                }
             ReturnMessage = "(" + ReturnMessage + ")";
             return ReturnMessage;
         }
