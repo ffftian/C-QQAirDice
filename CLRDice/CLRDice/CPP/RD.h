@@ -31,7 +31,7 @@
 #include "CQTools.h"
 #include "RDConstant.h"
 //#include "CQTools.h"
-extern std::map<long long, int> DefaultDice;
+/*exter*/ std::map<long long, int> DefaultDice;// 默认骰子
 
 //This function is used to generate random integer
 inline int Randint(int lowest, int highest)
@@ -689,7 +689,7 @@ public:
 		return strReturnString;
 	}
 
-	std::string FormStringCombined() const
+	std::string FormStringCombined() const//功能不明
 	{
 		std::string strReturnString;
 		for (auto i = vintRes.begin(); i != vintRes.end(); ++i)
@@ -727,7 +727,7 @@ public:
 		return strReturnString;
 	}
 
-	std::string FormShortString() const
+	std::string FormShortString() const//输出ro点结果
 	{
 		std::string strReturnString = strDice;
 		strReturnString.append("=");
@@ -746,7 +746,6 @@ public:
 	 inline void COC6D(std::string&);
 	 inline void COC6(std::string&, int);
 	 static inline void COC7D(std::string& strMAns);
-	 static  std::string *GGGB(std::string *stg);
 
 	 static std::string  VV();
 
@@ -758,6 +757,9 @@ inline void DND(std::string&, int);
 inline void LongInsane(std::string&);
 inline void TempInsane(std::string&);
 */
+
+//extern inline int RollDice(std::string&);
+extern inline void RA(std::string&);
 extern inline void init(std::string&);
 extern inline void init2(std::string&);
 extern inline void COC6D(std::string&);

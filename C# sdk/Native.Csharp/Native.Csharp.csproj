@@ -131,6 +131,8 @@
     <Compile Include="App\EventArgs\CqPrivateMessageEventArgs.cs" />
     <Compile Include="App\EventArgs\CqStartupEventArgs.cs" />
     <Compile Include="App\Event\CDice.cs" />
+    <Compile Include="App\Event\Global.cs" />
+    <Compile Include="App\Event\DiceRamdom.cs" />
     <Compile Include="App\Event\EConfig.cs" />
     <Compile Include="App\Event\Event_CqAppDisable.cs" />
     <Compile Include="App\Event\Event_CqAppEnable.cs" />
@@ -142,6 +144,7 @@
     <Compile Include="App\Event\GroupStruct.cs" />
     <Compile Include="App\Event\MsgProcess.cs" />
     <Compile Include="App\Event\FEvent_Dice.cs" />
+    <Compile Include="App\Event\RDConstant.cs" />
     <Compile Include="App\Interface\IReceiveALLPrivateMessage.cs" />
     <Compile Include="App\废弃的\FEvent_SavePlayMesage.cs" />
     <Compile Include="App\Event\FEvent_SavePlayMesagePro.cs" />

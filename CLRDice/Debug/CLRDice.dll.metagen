@@ -11,9 +11,10 @@ Assembly System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c5619
 	hash=None, flags=None
 Class CLRDice.Class1: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
-Class CLRDice.RD: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+Class CLRDice.CLRRD: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
   Methods:
+    RollDice(String&, Int32 IsLong): PrivateScope, Public, Static, HideBySig
     CLRCOC7(String&, Int32): PrivateScope, Public, Static, HideBySig
     CLRCOC7D(String&): PrivateScope, Public, Static, HideBySig
     CLRDND(String&, Int32): PrivateScope, Public, Static, HideBySig

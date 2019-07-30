@@ -18,23 +18,24 @@ namespace Native.Csharp.App.Event
         static string MeassgePath;
 
 
-        static public void JsonDataInit()
+        static public void JsonDataInit()//整理
         {
-            MeassgePath = AppDomain.CurrentDomain.BaseDirectory + ("Meassge.json");
-            
-            StreamReader reader = File.OpenText(MeassgePath);
-            try
+            MeassgePath = AppDomain.CurrentDomain.BaseDirectory + ("Save/Meassge.json");
+            if (File.Exists(MeassgePath))
             {
-                JsonData = (JObject)JToken.ReadFrom(new JsonTextReader(reader));
+                StreamReader reader = File.OpenText(MeassgePath);
+                    JsonData = (JObject)JToken.ReadFrom(new JsonTextReader(reader));
+               
+                reader.Close();
             }
-            catch
+            else
             {
                 JsonData = new JObject();
             }
-            reader.Close();
         }
         static public void JsonDataSave()
         {
+            System.IO.Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + ("Save"));
             File.WriteAllText(MeassgePath, JsonData.ToString());
         }
 
@@ -46,7 +47,7 @@ namespace Native.Csharp.App.Event
 
         public void 记录群友话语(CqGroupMessageEventArgs e)
         {
-            string filePath = AppDomain.CurrentDomain.BaseDirectory + ("Meassge.txt");
+           // string filePath = AppDomain.CurrentDomain.BaseDirectory + ("Meassge.json");
             if (e.Message.StartsWith(".录入话语"))
             {
                 var S1 = e.Message.IndexOf("问:");
@@ -73,21 +74,6 @@ namespace Native.Csharp.App.Event
                         JsonData.Add(SP1, SP2);
                     }
                     Common.CqApi.SendGroupMessage(e.FromGroup, "问:" + SP1 + "\n答:" + SP2 + "\n是吗?我明白了");
-
-                    /*
-                    var stringBuilder = new StringBuilder();
-                    var writer = new JsonWriter(stringBuilder);
-                    writer.WriteArrayStart();
-
-                    writer.WritePropertyName(SP1);
-                    writer.Write(SP2);
-                    writer.WriteArrayEnd();
-                    writer.
-
-                    File.AppendAllLines(AppDomain.CurrentDomain.BaseDirectory + ("Meassge.json"), Encoding.UTF8)
-                    JsonData data = new JsonData();
-                    */
-
                 }
                 else
                 {

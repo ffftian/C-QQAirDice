@@ -16,23 +16,23 @@ namespace Native.Csharp.App.Event
     {
         public  static JObject BlackData;
         static string dataPath;
-        //JArray jArray;
         static public void JsonDataInit()
         {
-            dataPath = AppDomain.CurrentDomain.BaseDirectory + ("BlackList.json");
-            StreamReader reader = File.OpenText(dataPath);
-            try
+            dataPath = AppDomain.CurrentDomain.BaseDirectory + ("Save/BlackList.json");
+            if (File.Exists(dataPath))
             {
+                StreamReader reader = File.OpenText(dataPath);
                 BlackData = (JObject)JToken.ReadFrom(new JsonTextReader(reader));
+                reader.Close();
             }
-            catch
+            else
             {
                 BlackData = new JObject();
             }
-            reader.Close();
         }
         static public void JsonDataSave()
         {
+            System.IO.Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + ("Save"));
             File.WriteAllText(dataPath, BlackData.ToString());
         }
 

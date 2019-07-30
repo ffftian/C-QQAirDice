@@ -3,11 +3,11 @@
   CLRDice.cpp
   CQTools.cpp
   RD.cpp
-c:\users\790947404\desktop\dict\my dice\clrdice\clrdice\cpp\rd.cpp(572): warning C4091: “static ”: 没有声明变量时忽略“CLRDice::RD”的左侧
+c:\users\790947404\desktop\dict\c#dice\clrdice\clrdice\cpp\rd.cpp(585): warning C4091: “static ”: 没有声明变量时忽略“CLRDice::CLRRD”的左侧
   Unpack.cpp
   正在生成代码...
-c:\users\790947404\desktop\dict\my dice\clrdice\clrdice\cpp\cqtools.h(24): warning C4793: “GetCycleCount”: 编译为本机的函数:
+c:\users\790947404\desktop\dict\c#dice\clrdice\clrdice\cpp\cqtools.h(24): warning C4793: “GetCycleCount”: 编译为本机的函数:
   	托管代码中不支持内联本机程序集
   .NETFramework,Version=v4.0.AssemblyAttributes.cpp
   AssemblyInfo.obj : 遇到了 MSIL 模块；对 MSIL 禁用了增量链接；正在执行完全链接
-  CLRDice.vcxproj -> C:\Users\790947404\Desktop\Dict\my Dice\CLRDice\Debug\CLRDice.dll
+  CLRDice.vcxproj -> C:\Users\790947404\Desktop\Dict\C#Dice\CLRDice\Debug\CLRDice.dll

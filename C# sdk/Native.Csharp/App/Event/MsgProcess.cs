@@ -125,6 +125,63 @@ namespace Native.Csharp.App.Event
             }
 
 
+            //[技能名称（可忽略）][技能数值][玩家附带的话]
+            //[技能名称任意，但任意必须包含数字][技能数值][玩家附带的话]
+            if (Message.StartsWith("/ra"))//面向解决设计
+            {
+                String strReply = "";
+
+                // String a = Message.Replace(" ", "");
+                if (!Regex.IsMatch(Message.Substring(3), @"\w+"))
+                {
+                    发送消息("指令不正确");
+                    return;
+                }
+
+               MatchCollection Skill= Regex.Matches(Message.Substring(3), @"\w+");//匹配技能名称
+               
+               int intSkillVal = RDConstant.FindSkill(Skill[0].Value);//技能值
+               if(Skill.Count>1)
+                {
+                   
+                   var T = Regex.Match(Skill[1].Value, @"[0-9]+");//进行获取是否为自定义技能//可能是数字
+                    if (T.Length != 0)
+                    {
+                        intSkillVal = int.Parse(Skill[1].Value);
+                    }
+                    else
+                    {
+                        发送消息("指令不正确未知的数字");
+                        return;
+                    }
+                    
+                }
+               else if(intSkillVal==0)
+                {
+                    发送消息("指令不正确，未知的技能属性");
+                    return;
+                }
+                int intD100Res = DiceRamdom.random.Next(0, 100);
+                if (intD100Res <= 5 && intD100Res <= intSkillVal) strReply += Global.GlobalMsg["strCriticalSuccess"];
+                else if (intD100Res > 95) strReply += Global.GlobalMsg["strFumble"];
+                else if (intD100Res <= intSkillVal / 5) strReply += Global.GlobalMsg["strExtremeSuccess"];
+                else if (intD100Res <= intSkillVal / 2) strReply += Global.GlobalMsg["strHardSuccess"];
+                else if (intD100Res <= intSkillVal) strReply += Global.GlobalMsg["strSuccess"];
+                else strReply += Global.GlobalMsg["strFailure"];
+
+                发送消息(获取昵称() + "进行" + Skill[0].Value + "鉴定:D100=" + intD100Res + "/" + intSkillVal + strReply);
+
+                //  var 数值 = Regex.Match(a, @"\u4e00-\u9fa5+");
+
+                //string strSkillName
+
+                //tring strReply = 获取昵称() + "进行" + strSkillName + "检定: D100=" + to_string(intD100Res) + "/" +
+                //to_string(intSkillVal) + " ";
+
+
+            }
+
+
             if (Regex.IsMatch(Message, @"(?<=^/遥控骰子\=)[0-9]+"))//遥控大法好//等于号之前被当正则符号处理了//接受到至少1位才进入
             {
                 遥控骰子(Message,QQ);
@@ -144,22 +201,39 @@ namespace Native.Csharp.App.Event
 
             #endregion
             #region
-              if(Message.StartsWith("/开启"))
+             // if(Message.StartsWith("/开启"))
 
             #endregion
 
-            CLR();
+            CLR(); MyTest();
         }
+        void MyTest()
+        {
+            if(QQ==790947404)
+            {
+              ///  string a=Message;
+               // CLRDice.CLRRD.RollDice(ref Message, 790947404);
+               // 发送消息(Message);
+
+            }
+        }
+
+
         void CLR()
         {
 
             String QQCLRMsg = 获取昵称();
-            if (Regex.IsMatch(Message, @"(?<=^/coc7)[0-9]+"))//COC7相关
+            if (Regex.IsMatch(Message, @"(?<=^/coc7)"))//COC7相关
             {
                 var t = Regex.Match(Message, @"(?<=^/coc7)[0-9]+");
-                if (t.Length < 3)
+                if(t.Length==0)
                 {
-                    CLRDice.RD.CLRCOC7(ref QQCLRMsg, int.Parse(t.Value));
+                    CLRDice.CLRRD.CLRCOC7(ref QQCLRMsg,1);
+                    发送消息(QQCLRMsg);
+                }
+                else if (t.Length < 3)
+                {
+                    CLRDice.CLRRD.CLRCOC7(ref QQCLRMsg, int.Parse(t.Value));
                     发送消息(QQCLRMsg);
                 }
                 else
@@ -170,18 +244,15 @@ namespace Native.Csharp.App.Event
 
             if (Message.StartsWith("/疯狂症状"))//疯狂症状
             {
-                CLRDice.RD.CLRLongInsane(ref QQCLRMsg);
+                CLRDice.CLRRD.CLRLongInsane(ref QQCLRMsg);
                 发送消息(QQCLRMsg);
             }
             if (Message.StartsWith("/临时疯狂"))//临时疯狂
             {
-                CLRDice.RD.CLRTempInsane(ref QQCLRMsg);
+                CLRDice.CLRRD.CLRTempInsane(ref QQCLRMsg);
                 发送消息(QQCLRMsg);
             }
         }
-
-
-
        public  string Dice(string Message)//不提供处理/r符号/
         {
             string ReturnMessage = "";

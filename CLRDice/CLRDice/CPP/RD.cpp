@@ -509,21 +509,68 @@ inline void init2(string& msg)
 		MOV = 8;
 	strMAns += "\n移动力MOV=" + to_string(MOV);
 }
+#include"CPP/RandomGenerator.h"
+#include"CPP/GlobalVar.h"
 
-  string *RD::GGGB(std::string * stg)
+
+inline void Main()
 {
-	  *stg = "114514";
 
-	return stg;
 }
-  string RD :: VV()
-  {
-	  return "11111";
-  }
+
+
+extern std::map<const std::string, std::string> GlobalMsg;/*
+inline void RA(string strMAns,string strNickName,string strSkillName)
+{
+	int intSkillVal;
+	if (strSkillVal.empty())
+	{
+		if (CharacterProp.count(SourceType(dice_msg.qq_id, dice_msg.msg_type, dice_msg.group_id)) && CharacterProp[SourceType(
+			dice_msg.qq_id, dice_msg.msg_type, dice_msg.group_id)].count(strSkillName))
+		{
+			intSkillVal = CharacterProp[SourceType(dice_msg.qq_id, dice_msg.msg_type, dice_msg.group_id)][strSkillName];
+		}
+		else if (SkillDefaultVal.count(strSkillName))
+		{
+			intSkillVal = SkillDefaultVal[strSkillName];
+		}
+		else
+		{
+			dice_msg.Reply(GlobalMsg["strUnknownPropErr"]);
+			return;
+		}
+	}
+	else if (strSkillVal.length() > 3)
+	{
+		dice_msg.Reply(GlobalMsg["strPropErr"]);
+		return;
+	}
+	else
+	{
+		intSkillVal = stoi(strSkillVal);
+	}
+	const int intD100Res = RandomGenerator::Randint(1, 100);
+	string strReply = strNickName + "进行" + strSkillName + "检定: D100=" + to_string(intD100Res) + "/" +
+		to_string(intSkillVal) + " ";
+	if (intD100Res <= 5 && intD100Res <= intSkillVal)strReply += GlobalMsg["strCriticalSuccess"];
+	else if (intD100Res > 95)strReply += GlobalMsg["strFumble"];
+	else if (intD100Res <= intSkillVal / 5)strReply += GlobalMsg["strExtremeSuccess"];
+	else if (intD100Res <= intSkillVal / 2)strReply += GlobalMsg["strHardSuccess"];
+	else if (intD100Res <= intSkillVal)strReply += GlobalMsg["strSuccess"];
+	else strReply += GlobalMsg["strFailure"];
+
+	if (!strReason.empty())
+	{
+		strReply = "由于" + strReason + " " + strReply;
+	}
+	dice_msg.Reply(strReply);
+}
+*/
 
   namespace CLRDice
   {
-	  static public ref class RD
+
+	  static public ref class CLRRD
 	  {
 	  private:
 		 static void MarshalString(String ^s, string& os) {
@@ -534,6 +581,18 @@ inline void init2(string& msg)
 			  Marshal::FreeHGlobal(IntPtr((void*)chars));
 		  }
 	  public:
+		  /**/
+		  static void  RollDice(String ^%NetS,long QQ)
+		  {
+
+			  string Cstring;
+			  MarshalString(NetS, Cstring);
+			  RD rdTurnCnt(Cstring,QQ);//看来只能处理
+			 rdTurnCnt.RD::Roll();//只能处理XDX
+             // NetS = gcnew String(rdTurnCnt.RD::FormShortString().c_str());//输出ro点结果
+			//  NetS = gcnew String(rdTurnCnt.RD::FormStringCombined().c_str());//功能不明
+		  }
+		  
 		 static void  CLRCOC7(String ^%NetS, int Number)
 		  {
 			  string Cstring;
