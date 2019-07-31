@@ -83,6 +83,15 @@ namespace Native.Csharp.App.Event
     {"strHelpCommandSuccessfullyDisabledNotice", "成功在本群/讨论组中禁用.help命令!"},
     {"strHelpCommandAlreadyDisabledErr", "错误: 在本群/讨论组中.help命令已经被禁用!"},
     {"strHelpCommandDisabledErr", "管理员已在此群/讨论组中禁用.help命令!"},
+    {"help",    "投点指令:丢出一个百面骰:/rd\n" +
+                "暗骰:/rhd\n"+
+                "丢出指定的骰子:/r[次数]d[范畴]\n" +
+                "技能鉴定:/ra[技能名称][技能成功率]\n" +
+                "投掷COC7版规则属性点指令:/coc[数字or忽略]\n" +
+                "随机一个疯狂症状:/临时疯狂\n" +
+                "只有群有效指令\n" +
+                "教丛雨说话:/录入话语  问:[收到的话]答:[回复的话]\n" +
+                "谢谢使用OVO"},
     };
     }
 }

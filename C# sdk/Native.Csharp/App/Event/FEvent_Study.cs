@@ -48,7 +48,7 @@ namespace Native.Csharp.App.Event
         public void 记录群友话语(CqGroupMessageEventArgs e)
         {
            // string filePath = AppDomain.CurrentDomain.BaseDirectory + ("Meassge.json");
-            if (e.Message.StartsWith(".录入话语"))
+            if (e.Message.StartsWith("/录入话语"))
             {
                 var S1 = e.Message.IndexOf("问:");
                 var S2 = e.Message.IndexOf("答:");

@@ -80,19 +80,19 @@ namespace Native.Csharp.App.Event
         void Main()
         {
             if (Message.StartsWith("/help"))
-            {
+            {/*
                 string 说明 = "丛雨就是我啦，现在拥有的功能有:\n" +
                     "教丛雨说话:.录入话语 问: 答: \n" +
                     "让丛雨录跑团记录:.录入开始 /名称 录入结束\n" +
-                    "投点使用/r 也可开启传统投点模式";
-                发送消息(说明 );
+                    "投点使用/r 也可开启传统投点模式";*/
+                发送消息(Global.GlobalMsg["help"]);
             }
             if (Message.StartsWith(".jrrp"))
             {
-                发送消息( "别jrrp了，来教我说话吧，指令：.录入话语 问: 答:");
+                发送消息( "别jrrp了，来教我说话吧，指令：/录入话语 问: 答:");
             }
             #region 投点相关
-            if (Message.StartsWith("/rd"))//公开丢点
+            if (Message.StartsWith("/rd"))//百面投点
             {
                 if (RemoteDict.ContainsKey(QQ) == false)
                 {
@@ -105,7 +105,7 @@ namespace Native.Csharp.App.Event
                     发送消息("由于"+Message.Substring(3)+ 获取昵称() + "的D100投出:" + 子遥控骰子读取("1d100", ref rd));
                 }
             }
-            if (Regex.IsMatch(Message, @"^/r[+-]?([0-9]+d[0-9]+)"))//一般匹配正则,关于投点
+            if (Regex.IsMatch(Message, @"^/r[+-]?([0-9]+d[0-9]+)"))//一般匹配正则,关于自定义投点
             {
                 if (RemoteDict.ContainsKey(QQ) == false)
                 {
@@ -123,12 +123,48 @@ namespace Native.Csharp.App.Event
                 发送消息(获取昵称 ()+"进行了一次暗骰");
                 发送私聊消息(获取昵称() + "的D100投出:" + SingleDice("1d100", ref rd));
             }
+            if (Message.StartsWith("/rp"))//惩罚丢点
+            {
+                int value = DiceRamdom.random.Next(0, 10);//1-10
+                int Punishment = DiceRamdom.random.Next(0, 10);//只会0-9
+                int Punishment2 = DiceRamdom.random.Next(0, 10);//只会0-9
+                                                         //  string valueS = value.ToString();
+
+               // value += Punishment> Punishment2? Punishment*10 : Punishment2 * 10;
+                if(value==0&& Punishment==0|| Punishment2==0)
+                {
+                    //大失败
+                    发送消息(获取昵称() + "投出了P=" + (value + Punishment * 10) + "惩罚骰=" + Punishment2 + "结果:" + (100)+"是的大失败了!");
+                }
+                else
+                {
+                    发送消息(获取昵称() + "投出了P=" + (value + Punishment * 10) + "惩罚骰=" + Punishment2 + "结果:" + (value + (Punishment > Punishment2 ? Punishment * 10 : Punishment2 * 10)));
+                }
+            }
+            if (Message.StartsWith("/rb"))//奖励丢点
+            {
+                int value = DiceRamdom.random.Next(0, 10);//1-10
+                int Punishment = DiceRamdom.random.Next(0, 10);//只会0-9
+                int Punishment2 = DiceRamdom.random.Next(0, 10);//只会0-9
+                                                                //  string valueS = value.ToString();
+
+                // value += Punishment> Punishment2? Punishment*10 : Punishment2 * 10;
+                if (value == 0 && Punishment == 0 && Punishment2 == 0)
+                {
+                    //大失败
+                    发送消息(获取昵称() + "投出了B=" + (value + Punishment * 10) + "奖励骰=" + Punishment2 + "结果:" + (100) + "是的大失败了，奖励骰还大失败，是俏!");
+                }
+                else
+                {
+                    发送消息(获取昵称() + "投出了B=" + (value + Punishment * 10) + "奖励骰=" + Punishment2 + "结果:" + (value + (Punishment < Punishment2 ? Punishment * 10 : Punishment2 * 10)));
+                }
+            }
 
 
             //[技能名称（可忽略）][技能数值][玩家附带的话]
             //[技能名称任意，但任意必须包含数字][技能数值][玩家附带的话]
             if (Message.StartsWith("/ra"))//面向解决设计
-            {
+                {
                 String strReply = "";
 
                 // String a = Message.Replace(" ", "");
@@ -137,7 +173,6 @@ namespace Native.Csharp.App.Event
                     发送消息("指令不正确");
                     return;
                 }
-
                MatchCollection Skill= Regex.Matches(Message.Substring(3), @"\w+");//匹配技能名称
                
                int intSkillVal = RDConstant.FindSkill(Skill[0].Value);//技能值
@@ -148,7 +183,7 @@ namespace Native.Csharp.App.Event
                     if (T.Length != 0)
                     {
                         intSkillVal = int.Parse(Skill[1].Value);
-                    }
+                    } 
                     else
                     {
                         发送消息("指令不正确未知的数字");
@@ -161,7 +196,7 @@ namespace Native.Csharp.App.Event
                     发送消息("指令不正确，未知的技能属性");
                     return;
                 }
-                int intD100Res = DiceRamdom.random.Next(0, 100);
+                int intD100Res = DiceRamdom.Roll(0, 100);
                 if (intD100Res <= 5 && intD100Res <= intSkillVal) strReply += Global.GlobalMsg["strCriticalSuccess"];
                 else if (intD100Res > 95) strReply += Global.GlobalMsg["strFumble"];
                 else if (intD100Res <= intSkillVal / 5) strReply += Global.GlobalMsg["strExtremeSuccess"];
@@ -179,9 +214,9 @@ namespace Native.Csharp.App.Event
                 //to_string(intSkillVal) + " ";
 
 
-            }
+                }
 
-
+            
             if (Regex.IsMatch(Message, @"(?<=^/遥控骰子\=)[0-9]+"))//遥控大法好//等于号之前被当正则符号处理了//接受到至少1位才进入
             {
                 遥控骰子(Message,QQ);
@@ -205,7 +240,8 @@ namespace Native.Csharp.App.Event
 
             #endregion
 
-            CLR(); MyTest();
+            CLR();
+            MyTest();
         }
         void MyTest()
         {
@@ -219,13 +255,15 @@ namespace Native.Csharp.App.Event
         }
 
 
+
+
         void CLR()
         {
 
             String QQCLRMsg = 获取昵称();
-            if (Regex.IsMatch(Message, @"(?<=^/coc7)"))//COC7相关
+            if (Regex.IsMatch(Message, @"(?<=^/coc)"))//COC7相关
             {
-                var t = Regex.Match(Message, @"(?<=^/coc7)[0-9]+");
+                var t = Regex.Match(Message, @"(?<=^/coc)[0-9]+");
                 if(t.Length==0)
                 {
                     CLRDice.CLRRD.CLRCOC7(ref QQCLRMsg,1);
@@ -241,8 +279,29 @@ namespace Native.Csharp.App.Event
                     发送消息("你投的太多啦！会撑啦");
                 }
             }
+            if (Regex.IsMatch(Message, @"(?<=^/dnd)"))//COC7相关
+            {
+                var t = Regex.Match(Message, @"(?<=^/dnd)[0-9]+");
+                if (t.Length == 0)
+                {
+                    CLRDice.CLRRD.CLRDND(ref QQCLRMsg, 1);
+                    发送消息(QQCLRMsg);
+                }
+                else if (t.Length < 3)
+                {
+                    CLRDice.CLRRD.CLRDND(ref QQCLRMsg, int.Parse(t.Value));
+                    发送消息(QQCLRMsg);
+                }
+                else
+                {
+                    发送消息("你投的太多啦！会撑啦");
+                }
+            }
 
-            if (Message.StartsWith("/疯狂症状"))//疯狂症状
+
+
+
+                if (Message.StartsWith("/疯狂症状"))//疯狂症状
             {
                 CLRDice.CLRRD.CLRLongInsane(ref QQCLRMsg);
                 发送消息(QQCLRMsg);
@@ -253,6 +312,8 @@ namespace Native.Csharp.App.Event
                 发送消息(QQCLRMsg);
             }
         }
+
+
        public  string Dice(string Message)//不提供处理/r符号/
         {
             string ReturnMessage = "";
@@ -269,6 +330,10 @@ namespace Native.Csharp.App.Event
             }
             return Message + "投出:" + ReturnMessage + "总值:" + I;
         }
+
+
+        //public int RollDice(int a)
+
        private  string SingleDice(string SingleMessage, ref int intValue)
         {
             string ReturnMessage = "";
