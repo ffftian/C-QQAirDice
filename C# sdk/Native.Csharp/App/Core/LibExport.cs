@@ -296,38 +296,51 @@ namespace Native.Csharp.App.Core
                || ReceiveDiscussPrivateMessage_1 != null || ReceiveALLPrivateMessage_1 != null)
 			{
 				CqPrivateMessageEventArgs args = new CqPrivateMessageEventArgs (1, msgId, fromQQ, msg.ToString (_defaultEncoding));
-                if (ReceiveALLPrivateMessage_1 != null)//自行新加
-                {
-                    ReceiveALLPrivateMessage_1(null, args);
-                }
-                else if (subType == 11)
+
+                 if (subType == 11)
 				{
 					if (ReceiveFriendMessage_1 != null)
 					{
 						ReceiveFriendMessage_1 (null, args);
 					}
-				}
+                    if (ReceiveALLPrivateMessage_1 != null)//自行新加
+                    {
+                        ReceiveALLPrivateMessage_1(null, args);
+                    }
+                }
 				else if (subType == 1)
 				{
 					if (ReceiveOnlineStatusMessage_1 != null)
 					{
 						ReceiveOnlineStatusMessage_1 (null, args);
 					}
-				}
+                    if (ReceiveALLPrivateMessage_1 != null)//自行新加
+                    {
+                        ReceiveALLPrivateMessage_1(null, args);
+                    }
+                }
 				else if (subType == 2)
 				{
 					if (ReceiveGroupPrivateMessage_1 != null)
 					{
 						ReceiveGroupPrivateMessage_1 (null, args);
 					}
-				}
+                    if (ReceiveALLPrivateMessage_1 != null)//自行新加
+                    {
+                        ReceiveALLPrivateMessage_1(null, args);
+                    }
+                }
 				else if (subType == 3)
 				{
 					if (ReceiveDiscussPrivateMessage_1 != null)
 					{
 						ReceiveDiscussPrivateMessage_1 (null, args);
 					}
-				}
+                    if (ReceiveALLPrivateMessage_1 != null)//自行新加
+                    {
+                        ReceiveALLPrivateMessage_1(null, args);
+                    }
+                }
 
 
 				return Convert.ToInt32 (args.Handler);

@@ -74,7 +74,19 @@ namespace Native.Csharp.App.Event
 
         string 获取昵称()
         {
-            return/* fromGroup==0?*/ Common.CqApi.GetQQInfo(QQ).Nick;/* :  Common.CqApi.GetMemberInfo(fromGroup, QQ).Nick;*/
+            if (msgtype == msgtype.Group)//群
+            {
+                return Common.CqApi.GetMemberInfo(fromGroup, QQ).Nick;
+            }
+            else if (msgtype == msgtype.Discuss)//讨论组
+            {
+              return/* fromGroup==0?*/ Common.CqApi.GetQQInfo(QQ).Nick;
+            }
+            else if (msgtype == msgtype.Private)//私聊
+            {
+                return/* fromGroup==0?*/ Common.CqApi.GetQQInfo(QQ).Nick;
+            }
+            return Common.CqApi.GetQQInfo(QQ).Nick; 
         }
 
         void Main()

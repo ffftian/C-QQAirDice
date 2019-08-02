@@ -15,14 +15,21 @@ namespace Native.Csharp.App.Event
 
         public void ReceiveGroupMessage(object sender, CqGroupMessageEventArgs e)
         {
-            if (FEvent_BlackList.BlackData[e.FromQQ.ToString()] != null)
+            try
             {
-                return;
+                if (FEvent_BlackList.BlackData[e.FromQQ.ToString()] != null)
+                {
+                    return;
+                }
+                MsgProcess msg = new MsgProcess(e.Message, e.FromQQ, e.FromGroup, msgtype.Group);
+                //savePlayMesagePro.ReceiveGroupMessage(sender, e);
+                //fEvent_Study.ReceiveGroupMessage(sender, e);
+                //fEvent_BlackList.ReceiveGroupMessage(sender, e);
             }
-            MsgProcess msg = new MsgProcess(e.Message, e.FromQQ, e.FromGroup, msgtype.Group);
-            savePlayMesagePro.ReceiveGroupMessage(sender, e);
-            fEvent_Study.ReceiveGroupMessage(sender, e);
-            fEvent_BlackList.ReceiveGroupMessage(sender, e);
+            catch(Exception exception)
+            {
+                Common.CqApi.SendPrivateMessage(790947404, exception.Message);
+            }
 
         }
         public void ReceiveALLPrivateMessage(object sender, CqPrivateMessageEventArgs e)

@@ -166,7 +166,11 @@ namespace Native.Csharp.App.Event
 
        public static int FindSkill(string Skill)
         {
-            if(SkillNameReplace.ContainsKey(Skill))
+            if (SkillDefaultVal.ContainsKey(Skill))
+            {
+                return SkillDefaultVal[Skill];
+            }
+            else if (SkillNameReplace.ContainsKey(Skill))
             {
              return  SkillDefaultVal[SkillNameReplace[Skill]];
             }
